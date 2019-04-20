@@ -1,33 +1,68 @@
 <odoo>
   <data>
-    <!-- explicit list view definition -->
-    <!--
-    <record model="ir.ui.view" id="ac_order.list">
-      <field name="name">ac_order list</field>
+    <record model="ir.ui.view" id="ac_order_list">
+      <field name="name">ac_order_list</field>
       <field name="model">ac_order.ac_order</field>
       <field name="arch" type="xml">
         <tree>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
+          <field name="ac_order_name"/>
+          <field name="ac_order_customer"/>
+          <field name="ac_date"/>
+          <field name="ac_order_line">
+            <tree>
+                <field name='product'/>
+            </tree>
+          </field>
         </tree>
       </field>
     </record>
-    -->
+    
+    <record model="ir.ui.view" id="ac_order_form">
+      <field name="name">ac_order_form</field>
+      <field name="model">ac_order.ac_order</field>
+      <field name="arch" type="xml">
+        <form>
+            <group>
+              <field name="ac_order_name"/>
+              <field name="ac_order_customer"/>
+              <field name="ac_date"/>
+            </group>
+          <field name="ac_order_line">
+            <tree editable="1">
+                <field name='product'/>
+                <field name='description'/>
+                <field name='uom'/>
+                <field name='unit_price'/>
+                <field name='discount'/>
+                <field name='discount_amount'/>
+                <field name='final_price'/>
+            </tree>
+            <form>
+                <group>
+                    <field name='product'/>
+                    <field name='description'/>
+                    <field name='uom'/>
+                    <field name='unit_price'/>
+                    <field name='discount'/>
+                    <field name='discount_amount'/>
+                    <field name='final_price'/>
+                </group>
+            </form>
+          </field>
+        </form>
+      </field>
+    </record>
 
-    <!-- actions opening views on models -->
-    <!--
-    <record model="ir.actions.act_window" id="ac_order.action_window">
-      <field name="name">ac_order window</field>
+    <record model="ir.actions.act_window" id="ac_order_action_window">
+      <field name="name">AC Order</field>
       <field name="res_model">ac_order.ac_order</field>
       <field name="view_mode">tree,form</field>
     </record>
-    -->
 
     <!-- server action to the one above -->
     <!--
     <record model="ir.actions.server" id="ac_order.action_server">
-      <field name="name">ac_order server</field>
+      <field name="name">ac_order_server</field>
       <field name="model_id" ref="model_ac_order_ac_order"/>
       <field name="state">code</field>
       <field name="code">
@@ -41,20 +76,11 @@
     -->
 
     <!-- Top menu item -->
-    <!--
-    <menuitem name="ac_order" id="ac_order.menu_root"/>
-    -->
+    <menuitem name="AC Order" id="ac_order_menu_root"/>
     <!-- menu categories -->
-    <!--
-    <menuitem name="Menu 1" id="ac_order.menu_1" parent="ac_order.menu_root"/>
-    <menuitem name="Menu 2" id="ac_order.menu_2" parent="ac_order.menu_root"/>
-    -->
+    <menuitem name="Order" id="ac_order_menu_1" parent="ac_order_menu_root"/>
     <!-- actions -->
-    <!--
-    <menuitem name="List" id="ac_order.menu_1_list" parent="ac_order.menu_1"
-              action="ac_order.action_window"/>
-    <menuitem name="Server to list" id="ac_order" parent="ac_order.menu_2"
-              action="ac_order.action_server"/>
-    -->
+    <menuitem name="AC Order" id="ac_order_menu_1_list" parent="ac_order_menu_1"
+              action="ac_order_action_window"/>
   </data>
 </odoo>

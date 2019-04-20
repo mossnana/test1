@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "ac_order",
+    'name': "AC Order",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        This is test 1 from Odoo 
+        Develop by Permpoon
+                """,
 
     'description': """
-        Long description of module's purpose
+        For Support to Developer, Give me a star @ github.com/mossnana
     """,
 
-    'author': "My Company",
-    'website': "http://www.yourcompany.com",
+    'author': "Permpoon Chaowanaphunphon",
+    'website': "https://mossnana.github.io/resume",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/master/odoo/addons/base/module/module_data.xml
@@ -20,7 +21,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base','sale'],
 
     # always loaded
     'data': [
