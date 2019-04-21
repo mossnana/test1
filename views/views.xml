@@ -16,16 +16,22 @@
         </tree>
       </field>
     </record>
-    
+
     <record model="ir.ui.view" id="ac_order_form">
       <field name="name">ac_order_form</field>
       <field name="model">ac_order.ac_order</field>
       <field name="arch" type="xml">
         <form>
+            <header>
+                <button name="copy_data" string='Confirm' type='object' class='btn-warning'/>
+                <field name="ac_order_state" widget="statusbar" statusbar_visible="draft,confirm,cancel"/>
+            </header>
+
             <group>
               <field name="ac_order_name"/>
               <field name="ac_order_customer"/>
               <field name="ac_date"/>
+              <field name="ac_order_state"/>
             </group>
           <field name="ac_order_line">
             <tree editable="1">

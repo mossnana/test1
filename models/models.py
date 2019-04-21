@@ -10,6 +10,22 @@ class ac_order(models.Model):
         ac_order_customer = fields.Many2one('res.partner', string='Customer')
         ac_date = fields.Date(string='Date')
         ac_order_line = fields.One2many('ac_order.ac_order_line',  'ac_order_id', string='Order Lines')
+        ac_order_state = fields.Selection([
+                ('draft', 'Quotation'),
+                ('confirm', 'Confirm'),
+                ('cancel', 'Cancelled'),
+                ], string='AC Order Status', readonly=True, copy=False, store=True, default='draft')
+
+        # Comfirm button : copy to sale order
+        @api.multi
+        def copy_data(self, default=None):
+                import pdb; pdb.set_trace()
+            #if default is None:
+                    #default = {}
+            #if 'order_line' not in default:
+                    #default['order_line'] = [(0, 0, line.copy_data()[0]) for line in self.order_line.filtered(lambda l: not l.is_downpayment)]
+            #return super(SaleOrder, self).copy_data(default)
+
 
 class ac_order_line(models.Model):
         _name = 'ac_order.ac_order_line'
