@@ -21,17 +21,23 @@
       <field name="name">ac_order_form</field>
       <field name="model">ac_order.ac_order</field>
       <field name="arch" type="xml">
-        <form>
+        <form class='o_sale_order'>
             <header>
-                <button name="copy_data" string='Confirm' type='object' class='btn-warning'/>
-                <field name="ac_order_state" widget="statusbar" statusbar_visible="draft,confirm,cancel"/>
+                <button name="confirm_order" string='Confirm' type='object' class='btn-success' states="draft"/>
+                <button name="to_draft_order" string='Edit' type='object' class='btn-warning' states="comfirm"/>
+                <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
             </header>
-
+            <sheet>
+                <div class="oe_button_box" name="button_box">
+                <button name="action_view_sale" type="object" class="oe_stat_button" icon="fa-pencil-square-o">
+                    <field name="sale_count" icon='fa-linux' widget="statinfo" string="Sales"/>
+                </button>
+                </div>
             <group>
               <field name="ac_order_name"/>
               <field name="ac_order_customer"/>
               <field name="ac_date"/>
-              <field name="ac_order_state"/>
+              <field name="state"/>
             </group>
           <field name="ac_order_line">
             <tree editable="1">
@@ -39,9 +45,10 @@
                 <field name='description'/>
                 <field name='uom'/>
                 <field name='unit_price'/>
+                <field name='qty'/>
                 <field name='discount'/>
                 <field name='discount_amount'/>
-                <field name='final_price'/>
+                <field name='final_price' sum="Total Price"/>
             </tree>
             <form>
                 <group>
@@ -49,12 +56,14 @@
                     <field name='description'/>
                     <field name='uom'/>
                     <field name='unit_price'/>
+                    <field name='qty'/>
                     <field name='discount'/>
                     <field name='discount_amount'/>
                     <field name='final_price'/>
                 </group>
             </form>
           </field>
+            </sheet>
         </form>
       </field>
     </record>
