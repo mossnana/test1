@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            id="action_report_ac_order"
+            string="Report"
+            model="ac_order.ac_order"
+            report_type="qweb-pdf"
+            file="test1.report_ac_order"
+            name="test1.report_ac_order"
+        />
+
+        <template id="test1.report_ac_order">
+            <div class="article">
+                    <div class="page">
+                        <t t-foreach="docs" t-as="doc">
+                            <h2>Order # <span t-field="doc.ac_order_name"></span></h2>
+                            <br/>
+                            <h1>Customer</h1>
+                            <br/>
+                            <h4 t-field="doc.ac_order_customer"></h4>
+                            <br/>
+                            <h4 class="bg-info text-center" style="padding: 10px">AC Order Product</h4>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Description</th>
+                                        <th>UoM</th>
+                                        <th>Unit Price</th>
+                                        <th>Qty</th>
+                                        <th>Discount</th>
+                                        <th>Discount Amount</th>
+                                        <th>Final Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.ac_order_line" t-as="line">
+                                        <tr>
+                                            <th><span t-field="line.product"></span></th>
+                                            <th><span t-field="line.description"></span></th>
+                                            <th><span t-field="line.uom"></span></th>
+                                            <th><span t-field="line.unit_price"></span></th>
+                                            <th><span t-field="line.qty"></span></th>
+                                            <th><span t-field="line.discount"></span></th>
+                                            <th><span t-field="line.discount_amount"></span></th>
+                                            <th><span t-field="line.final_price"></span></th>
+                                        </tr>
+                                    </t>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th><strong>Total Price</strong></th>
+                                        <th><t t-esc = "'{0:,.2f}'.format(sum(line.final_price for line in doc.ac_order_line))"/></th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br/>
+                            <h4 class="bg-info text-center" style="padding: 10px">AC Order Coupon</h4>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Coupon Name</th>
+                                        <th>Coupon Code</th>
+                                        <th>Coupon Sale Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.ac_coupon" t-as="line">
+                                        <tr>
+                                            <th><span t-field="line.coupon_name"></span></th>
+                                            <th><span t-field="line.coupon_code"></span></th>
+                                            <th><span t-field="line.coupon_sale"></span></th>
+                                        </tr>
+                                    </t>
+                                    <tr>
+                                        <th></th>
+                                        <th><strong>Total Sale Amount</strong></th>
+                                        <th><t t-esc = "'{0:,.2f}'.format(sum(line.coupon_sale for line in doc.ac_coupon))"/></th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
+                    <div style="page-break-after: always;"/>
+                </div>
+            </div>
+        </template>
+    </data>
+</odoo>
+

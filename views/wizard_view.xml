@@ -1,0 +1,47 @@
+<odoo>
+    <record id="view_wizard_ac_order" model="ir.ui.view">
+        <field name="name">wizard_ac_order</field>
+        <field name="model">wizard_ac_order</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <group col="4">
+                    <field name="id"/>
+                    <field name="coupon_name"/>
+                    <field name="coupon_code"/>
+                    <field name="coupon_sale"/>
+                </group>
+                <footer>
+                    <button string="Create" type="object" name="generate_code" class="btn-success"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_wizard_ac_order_tree" model="ir.ui.view">
+        <field name="name">wizard_ac_order_tree</field>
+        <field name="model">wizard_ac_order</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="id"/>
+                <field name="coupon_name"/>
+                <field name="coupon_code"/>
+                <field name="coupon_sale"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="actions_wizard_ac_order" model="ir.actions.act_window">
+        <field name="name">AC Order Coupon</field>
+        <field name="res_model">wizard_ac_order</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+    </record>
+
+    <menuitem name="AC Coupon" id="ac_order_menu_coupon" parent="ac_order_menu_root"/>
+    <menuitem name="Quick Add Coupon" id="test1.menu_wizard_ac_order" parent="ac_order_menu_coupon" action="test1.actions_wizard_ac_order"/>
+</odoo>
