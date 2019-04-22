@@ -28,6 +28,7 @@
         # 'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
+        'views/wizard_view.xml',
         'report/report_ac_order.xml',
     ],
     # only loaded in demonstration mode

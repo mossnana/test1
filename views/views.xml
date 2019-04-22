@@ -13,10 +13,12 @@
                 <field name='product'/>
             </tree>
           </field>
+          <field name="state"/>
         </tree>
       </field>
     </record>
 
+<!-- Sales Orders Form View -->
     <record model="ir.ui.view" id="ac_order_form">
       <field name="name">ac_order_form</field>
       <field name="model">ac_order.ac_order</field>
@@ -24,7 +26,8 @@
         <form class='o_sale_order'>
             <header>
                 <button name="confirm_order" string='Confirm' type='object' class='btn-success' states="draft"/>
-                <button name="to_draft_order" string='Edit' type='object' class='btn-warning' states="comfirm"/>
+                <button name="to_draft_order" string='Draft' type='object' class='btn-warning' states="confirm"/>
+                <button name="to_cancel_order" string='Cancel' type='object' class='btn-danger' states="draft"/>
                 <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
             </header>
             <sheet>
@@ -37,41 +40,98 @@
               <field name="ac_order_name"/>
               <field name="ac_order_customer"/>
               <field name="ac_date"/>
-              <field name="state"/>
             </group>
-          <field name="ac_order_line">
-            <tree editable="1">
-                <field name='product'/>
-                <field name='description'/>
-                <field name='uom'/>
-                <field name='unit_price'/>
-                <field name='qty'/>
-                <field name='discount'/>
-                <field name='discount_amount'/>
-                <field name='final_price' sum="Total Price"/>
-            </tree>
-            <form>
-                <group>
-                    <field name='product'/>
-                    <field name='description'/>
-                    <field name='uom'/>
-                    <field name='unit_price'/>
-                    <field name='qty'/>
-                    <field name='discount'/>
-                    <field name='discount_amount'/>
-                    <field name='final_price'/>
-                </group>
-            </form>
-          </field>
-            </sheet>
+            <notebook>
+                <page string="AC Order Line">
+                  <field name="ac_order_line">
+                    <tree editable="1">
+                        <field name='product'/>
+                        <field name='description'/>
+                        <field name='uom'/>
+                        <field name='unit_price'/>
+                        <field name='qty'/>
+                        <field name='discount'/>
+                        <field name='discount_amount'/>
+                        <field name='final_price' sum="Total Price" widget="monetary"/>
+                    </tree>
+                    <form>
+                        <group>
+                            <field name='product'/>
+                            <field name='description'/>
+                            <field name='uom'/>
+                            <field name='unit_price'/>
+                            <field name='qty'/>
+                            <field name='discount'/>
+                            <field name='discount_amount'/>
+                            <field name='final_price'/>
+                        </group>
+                    </form>
+                  </field>
+                </page>
+                <page string="AC Order Coupon">
+                    <field name="ac_coupon">
+                        <tree>
+                            <field name="id"/>
+                            <field name="coupon_name"/>
+                            <field name="coupon_code"/>
+                            <field name="coupon_sale" sum="Total Coupon Amount" widget="monetary"/>
+                        </tree>
+                        <form>
+                            <group span="4">
+                                <field name="coupon_name"/>
+                                <field name="coupon_code"/>
+                                <field name="coupon_sale"/>
+                            </group>
+                        </form>
+                    </field>
+                </page>
+            </notebook>
+            <group>
+                <field name="total_price"/>
+            </group>
+        </sheet>
         </form>
       </field>
+    </record>
+
+<!-- Sales Orders Kanban View  -->
+    <record model="ir.ui.view" id="view_sale_order_kanban">
+        <field name="name">ac.order.kanban</field>
+        <field name="model">ac_order.ac_order</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="ac_order_name"/>
+                <field name="ac_order_customer"/>
+                <field name="ac_date"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            <div class="o_kanban_record_top mb16">
+                                <div class="o_kanban_record_headings mt4">
+                                    <strong class="o_kanban_record_title"><span><t t-esc="record.ac_order_customer.value"/></span></strong>
+                                </div>
+                                <strong><field name="sale_count"/></strong>
+                            </div>
+                            <div class="o_kanban_record_bottom">
+                                <div class="oe_kanban_bottom_left text-muted">
+                                    <span><t t-esc="record.ac_order_name.value"/> <t t-esc="record.ac_date.value"/></span>
+                                </div>
+                                <div class="oe_kanban_bottom_right">
+                                    <field name="state" widget="label_selection" options="{'classes': {'draft': 'warning', 'cancel': 'danger', 'confirm': 'success'}}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
     </record>
 
     <record model="ir.actions.act_window" id="ac_order_action_window">
       <field name="name">AC Order</field>
       <field name="res_model">ac_order.ac_order</field>
-      <field name="view_mode">tree,form</field>
+      <field name="view_mode">tree,form,kanban</field>
     </record>
 
     <!-- server action to the one above -->
