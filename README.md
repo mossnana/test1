@@ -1,2 +1,3 @@
-# test1
-Almacom First Test : ac_order model
+# ข้อสอบชุดที่ 1
+ของทางบริษัท Netforce
+สร้าง Module ของตัวเอง "ac_order" โดยที่สามารถทำงานกับ Sale Order ได้
